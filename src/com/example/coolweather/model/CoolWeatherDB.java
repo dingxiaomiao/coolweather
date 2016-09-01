@@ -1,9 +1,10 @@
-package model;
+package com.coolweather.app.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import db.CoolWeatherOpenHelper;
+import com.coolweather.app.db.CoolWeatherOpenHelper;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -49,6 +50,9 @@ public class CoolWeatherDB {
 				province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
 				list.add(province);
 			}while(cursor.moveToNext());
+			if(cursor !=null){
+				cursor.close();
+			}
 		}
 		return list;
 	}
@@ -58,13 +62,14 @@ public class CoolWeatherDB {
 			ContentValues values = new ContentValues();
 			values.put("city_name", city.getCityName());
 			values.put("city_code", city.getCityCode());
+			values.put("province_id", city.getProvinceId());
 			db.insert("City", null, values);
 		}
 	}
 //	从数据库中读取摸个省下面的城市信息
 	public List<City> loadCities(int provinceId){
 		List<City> list = new ArrayList<City>();
-		Cursor cursor = db.query("City",null,"provinceId=?",new String[]{String.valueOf(provinceId)},null,null,null);
+		Cursor cursor = db.query("City",null,"province_id=?",new String[]{String.valueOf(provinceId)},null,null,null);
 		if(cursor.moveToFirst()){
 			do{
 				City city = new City();
@@ -74,6 +79,9 @@ public class CoolWeatherDB {
 				city.setProvinceId(provinceId);
 				list.add(city);
 			}while(cursor.moveToNext());
+		}
+		if(cursor !=null){
+			cursor.close();
 		}
 		return list;
 	}
@@ -90,7 +98,7 @@ public class CoolWeatherDB {
 //	读取摸一个城市下面的县级信息
 	public List<County> loadCounties(int cityId){
 		List<County> list = new ArrayList<County>();
-		Cursor cursor = db.query("county", null, "cityId=?", new String[]{String.valueOf(cityId)}, null, null, null);
+		Cursor cursor = db.query("county", null, "city_id=?", new String[]{String.valueOf(cityId)}, null, null, null);
 		if(cursor.moveToFirst()){
 			do{
 				County county = new County();
@@ -100,6 +108,9 @@ public class CoolWeatherDB {
 				county.setCityId(cityId);
 				list.add(county);
 			}while (cursor.moveToNext());
+			if(cursor !=null){
+				cursor.close();
+			}
 		}
 		return list;
 	}

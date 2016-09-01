@@ -1,10 +1,9 @@
-package util;
+package com.example.coolweather;
+
+
 
 import android.text.TextUtils;
-import model.City;
-import model.CoolWeatherDB;
-import model.County;
-import model.Province;
+
 
 public class Utility {
 //	解析和处理服务器返回的省级数据
@@ -34,7 +33,7 @@ public class Utility {
 					City city = new City();
 					city.setCityCode(array[0]);
 					city.setCityName(array[1]);
-					city.setId(provinceId);
+					city.setProvinceId(provinceId);
 					coolWeatherDB.saveCity(city);
 				}
 				return true;

@@ -1,4 +1,4 @@
-package db;
+package com.coolweather.app.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,22 +10,23 @@ public class CoolWeatherOpenHelper extends SQLiteOpenHelper {
 	/**
 	 * Province表建表语句
 	 */
-	public static final String CREATE_PROVINCE="create table Province("
-			+"id integer primary key antoincrement,"
-			+"province_name text,"
-			+"province_code text)";
+	public static final String CREATE_PROVINCE = "create table Province ("
+			+ "id integer primary key autoincrement, " 
+			+ "province_name text, "
+			+ "province_code text)";
 //	City表建表语句
-	public static final String CREATE_CITY="create table City("
-			+"id integer primary key antoincrement,"
-			+"city_name text,"
-			+"city_code text,"
-			+"Province_id integer";
+	public static final String CREATE_CITY = "create table City ("
+			+ "id integer primary key autoincrement, " 
+			+ "city_name text, " 
+			+ "city_code text, " 
+			+ "province_id integer)";
 //	Country表建表语句
-	public static final String CREATE_COUNTY="create table County("
-			+"id integer primary key antoincrement,"
-			+"county_name text,"
-			+"county_code text,"
-			+"City_id integer";
+
+	public static final String CREATE_COUNTY = "create table County ("
+			+ "id integer primary key autoincrement, " 
+			+ "county_name text, " 
+			+ "county_code text, " 
+			+ "city_id integer)";
 	public CoolWeatherOpenHelper(Context context,String name,CursorFactory factory,int version){
 		super(context,name,factory,version);
 	}

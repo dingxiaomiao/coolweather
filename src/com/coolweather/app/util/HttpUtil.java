@@ -1,10 +1,14 @@
-package util;
+package com.coolweather.app.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import android.widget.Toast;
+
+import com.coolweather.app.activity.ChooseAreaActivity;
 
 public class HttpUtil {
 	public static void sendHttpRequest(final String address,final HttpCallbackListener listener) {
@@ -13,6 +17,7 @@ public class HttpUtil {
 			public void run(){
 				HttpURLConnection connection =null;
 				try{
+					//Toast.makeText(this, "sdfasf", Toast.LENGTH_LONG).show();
 					URL url = new URL(address);
 					connection = (HttpURLConnection)url.openConnection();
 					connection.setRequestMethod("GET");
@@ -24,6 +29,9 @@ public class HttpUtil {
 					String line;
 					while((line = reader.readLine())!=null){
 						response.append(line);
+						if(listener !=null){
+							listener.onFinish(response.toString());
+						}
 					}
 				}catch(Exception e){
 					if(listener != null){
